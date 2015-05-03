@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<title>DISRUPT</title>
+<link rel="stylesheet" href="http://js.arcgis.com/3.13/esri/css/esri.css">
+<script src="http://js.arcgis.com/3.13/"></script>
+<script>
+    var x = [-73.995]
+    var y = [40.752]
+    require(["esri/map", "esri/geometry/Point", "esri/SpatialReference", "esri/symbols/SimpleMarkerSymbol", "esri/graphic", "dojo/domReady!"], function(Map, Point, SpatialReference, SimpleMarkerSymbol, Graphic) {
+        var map = new Map("map", {
+            center: [-73.995, 40.752],
+            zoom: 8,
+            basemap: "topo"
+        });
+        map.on("load", function () {
+            for (i = 0; i < x.length; ++i) {
+                ShowLocation(x[i], y[i]);
+            }
+        });
+
+        function ShowLocation(x, y) {
+            var point = new Point(x, y, new SpatialReference({wkid:4326}));
+            var simpleMarkerSymbol = new SimpleMarkerSymbol();
+            var graphic = new Graphic(point, simpleMarkerSymbol);
+
+            map.graphics.add(graphic);
+        };
+    });
+</script>
+</head>
+
+<body>
+<p id="map" class="map" >
+</p>
+</body>
+
+</html>
